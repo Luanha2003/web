@@ -4716,11 +4716,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\acer\\web\\web.csproj",
+      "projectUniqueName": "C:\\Users\\acer\\Downloads\\web\\web.csproj",
       "projectName": "web",
-      "projectPath": "C:\\Users\\acer\\web\\web.csproj",
+      "projectPath": "C:\\Users\\acer\\Downloads\\web\\web.csproj",
       "packagesPath": "C:\\Users\\acer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\acer\\web\\obj\\",
+      "outputPath": "C:\\Users\\acer\\Downloads\\web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

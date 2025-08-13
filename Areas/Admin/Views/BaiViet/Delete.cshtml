@@ -1,0 +1,10 @@
+@model WEB.Models.BaiViet
+@{ ViewData["Title"] = "Xóa bài viết"; }
+
+<h2>Xóa bài viết</h2>
+<div class="alert alert-warning">Bạn có chắc muốn xóa: <strong>@Model.TieuDe</strong>?</div>
+<form asp-action="Delete" method="post">
+  <input type="hidden" asp-for="BaiVietID" />
+  <button class="btn btn-danger">Xóa</button>
+  <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
