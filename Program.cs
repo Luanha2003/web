@@ -2,13 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using WEB.Models; // thêm để nhận NewsDbContext
 
 var builder = WebApplication.CreateBuilder(args);
+// Đăng ký DbContext
+builder.Services.AddDbContext<NewsDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 // Add services to the container
 builder.Services.AddControllersWithViews();
 
-// Đăng ký DbContext
-builder.Services.AddDbContext<NewsDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
