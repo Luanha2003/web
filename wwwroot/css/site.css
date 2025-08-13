@@ -1,31 +1,165 @@
+/* General Styles */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #f8f9fa;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.container {
+    max-width: 1200px;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Header */
+.top-bar {
+    background-color: #343a40;
+    color: white;
+    padding: 0.5rem 0;
+    font-size: 0.8rem;
+}
+
+.social-media a {
+    color: white;
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+.social-media a:hover {
+    color: #0d6efd;
+}
+
+.main-nav {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+.search-form .form-control {
+    border-radius: 20px 0 0 20px;
+}
+
+.search-form .btn {
+    border-radius: 0 20px 20px 0;
+}
+
+.auth-buttons .btn {
+    margin-left: 10px;
+}
+
+/* Main Content - Home Page */
+.main-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 992px) {
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.featured-news .card-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.side-news .card {
+    border: none;
+    background: transparent;
+}
+
+.side-news .card-body {
+    padding: 0.5rem 1rem;
+}
+
+.side-news .card-title {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Footer */
+.site-footer {
+    background-color: #212529;
+    color: #adb5bd;
+    padding: 40px 0;
+}
+
+.site-footer h5 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.site-footer a {
+    color: #adb5bd;
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: white;
+}
+
+.site-footer .list-unstyled li {
+    margin-bottom: 10px;
+}
+
+.site-footer .tags .tag {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #343a40;
+    border-radius: 5px;
+    margin: 3px;
+    font-size: 0.9rem;
+}
+
+/* Auth Pages (Login/Register) */
+.auth-page {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 15px;
+}
+
+.auth-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.auth-card .forgot-password {
+    font-size: 0.9rem;
+}
+
+.auth-card .btn {
+    padding: 0.75rem;
+    font-weight: bold;
 }

@@ -3,45 +3,113 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - web</title>
-    <script type="importmap"></script>
+    <title>@ViewData["Title"] - News Website</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/web.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">web</a>
+        <div class="top-bar">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="social-media">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="current-date">
+                    <script>document.write(new Date().toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));</script>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light main-nav">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">News</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" href="#">Thế Giới</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Công Nghệ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Kinh Doanh</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Giải Trí</a>
                         </li>
                     </ul>
+                    <form class="d-flex search-form">
+                        <input class="form-control me-2" type="search" placeholder="Tìm kiếm..." aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                    <div class="auth-buttons ms-3">
+                        <a asp-controller="Home" asp-action="Login" class="btn btn-primary">Đăng Nhập</a>
+                        <a asp-controller="Home" asp-action="Register" class="btn btn-secondary">Đăng Ký</a>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container main-content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="site-footer">
         <div class="container">
-            &copy; 2025 - web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>Về chúng tôi</h5>
+                    <p>Trang tin tức tổng hợp, cập nhật thông tin nhanh chóng và chính xác nhất từ nhiều nguồn uy tín trong và ngoài nước.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Danh Mục</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Thế Giới</a></li>
+                        <li><a href="#">Công Nghệ</a></li>
+                        <li><a href="#">Kinh Doanh</a></li>
+                        <li><a href="#">Giải Trí</a></li>
+                        <li><a href="#">Thể Thao</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Tags</h5>
+                    <div class="tags">
+                        <a href="#" class="tag">#Covid19</a>
+                        <a href="#" class="tag">#BóngĐá</a>
+                        <a href="#" class="tag">#ChứngKhoán</a>
+                        <a href="#" class="tag">#Startup</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5>Liên Hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-map-marker-alt"></i> 123 Đường ABC, Quận 1, TP.HCM</li>
+                        <li><i class="fa fa-phone"></i> (028) 3812 3456</li>
+                        <li><i class="fa fa-envelope"></i> contact@news.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p>&copy; 2025 - News Website. All Rights Reserved.</p>
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
