@@ -23,18 +23,7 @@ namespace web.Controllers
             return View();
         }
 
-        // Action cho trang Đăng nhập
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        // Action cho trang Đăng ký
-        public IActionResult Register()
-        {
-            return View();
-        }
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
