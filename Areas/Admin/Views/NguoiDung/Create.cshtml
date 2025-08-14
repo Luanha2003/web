@@ -1,0 +1,37 @@
+@model WEB.Models.NguoiDung
+@{ ViewData["Title"] = "Thêm người dùng"; }
+
+<h2>Thêm người dùng</h2>
+
+<form asp-action="Create" method="post">
+  @Html.AntiForgeryToken()
+
+  <div class="mb-3">
+    <label class="form-label">Họ tên</label>
+    <input asp-for="HoTen" class="form-control" />
+    <span asp-validation-for="HoTen" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Email</label>
+    <input asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Mật khẩu</label>
+    <input asp-for="MatKhau" class="form-control" />
+    <span asp-validation-for="MatKhau" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Vai trò</label>
+    <select asp-for="VaiTro" class="form-control">
+      <option value="DocGia">DocGia</option>
+      <option value="Admin">Admin</option>
+    </select>
+  </div>
+
+  <button class="btn btn-primary">Lưu</button>
+  <a class="btn btn-secondary" asp-action="Index">Hủy</a>
+</form>

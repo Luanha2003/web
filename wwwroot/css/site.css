@@ -66,3 +66,21 @@
     background:#e15a26; border-radius: 8px;
 }
 .intro-hotline .card-body{ background:transparent; }
+/* Dropdown Danh mục */
+.dm-dropdown { padding: 0.25rem; min-width: 220px; }
+.dm-item {
+    font-weight: 600;
+    border-radius: 4px;
+    margin: 2px 0;
+}
+.dm-item:hover { opacity: .9; }
+.dm-blue  { background: #0d6efd; color:#fff; }
+.dm-cream { background: #ffe8b3; color:#333; }
+
+/* Trang Thông báo nội bộ */
+.tbnb-breadcrumb { color:#3b3b3b; }
+.tbnb-list .item { padding: 12px 14px; border: 1px solid #e9ecef; border-left: 4px solid #e5e5e5; background:#fff; }
+.tbnb-list .item + .item { margin-top: 8px; }
+.tbnb-pagination .page-link{ min-width:44px; text-align:center; }
+.tbnb-side .btn-warning{ font-weight:600; text-align:left; }
+.tbnb-hotline { background:#e15a26; border-radius:8px; color:#fff; }

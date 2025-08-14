@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Http
 @{
     var userName = Context.Session.GetString("UserName");
-    var userRole = Context.Session.GetString("UserRole"); // Đọc vai trò từ Session
+    var userRole = Context.Session.GetString("UserRole");
 }
 <header class="header-cds">
     <div class="header-top">
@@ -34,7 +34,6 @@
                     {
                         <span class="text-white small me-2">Xin chào, <strong>@userName</strong></span>
 
-                        @* Nút Về trang quản trị chỉ cho Admin *@
                         @if (!string.IsNullOrEmpty(userRole) && userRole.Equals("Admin", StringComparison.OrdinalIgnoreCase))
                         {
                             <a class="btn btn-sm btn-warning me-2" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
@@ -59,7 +58,7 @@
 
     <nav class="header-menu">
         <div class="container">
-            <ul class="nav nav-underline justify-content-start gap-3 fw-semibold">
+            <ul class="nav nav-underline justify-content-start gap-3 fw-semibold align-items-center">
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                         <i class="fa fa-home me-1"></i> TRANG CHỦ
@@ -71,7 +70,32 @@
                 <li class="nav-item"><a class="nav-link" href="#">TIN TỨC - SỰ KIỆN</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">VĂN BẢN QUẢN LÝ</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">CHIẾN LƯỢC - QUY HOẠCH</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">DANH MỤC</a></li>
+
+                <!-- ====== DANH MỤC DROPDOWN ====== -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">DANH MỤC</a>
+
+                    <ul class="dropdown-menu dm-dropdown shadow">
+                        <li>
+                            <a class="dropdown-item dm-item dm-blue" href="#">
+                                ĐẦU TƯ, ĐẤU THẦU
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item dm-item dm-blue" href="#">
+                                SẢN PHẨM
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item dm-item dm-cream" asp-area="" asp-controller="ThongBaoNoiBo" asp-action="Index">
+                                THÔNG BÁO NỘI BỘ
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- =============================== -->
             </ul>
         </div>
     </nav>

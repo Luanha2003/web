@@ -1,0 +1,61 @@
+@model IEnumerable<WEB.Models.NguoiDung>
+@{ ViewData["Title"] = "Quản lý Người dùng"; }
+
+<h2>Quản lý Người dùng</h2>
+
+@if (TempData["Err"] != null)
+{
+  <div class="alert alert-warning">@TempData["Err"]</div>
+}
+
+<p>
+  <a class="btn btn-primary" asp-action="Create">Thêm người dùng</a>
+  <a class="btn btn-secondary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Về Dashboard</a>
+</p>
+
+<table class="table table-bordered table-hover align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Họ tên</th>
+      <th>Email</th>
+      <th>Vai trò</th>
+      <th>Ngày tạo</th>
+      <th style="width:260px">Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach (var u in Model)
+  {
+    <tr>
+      <td>@u.NguoiDungID</td>
+      <td>@u.HoTen</td>
+      <td>@u.Email</td>
+      <td>
+        <span class="badge @(string.Equals(u.VaiTro,"Admin",StringComparison.OrdinalIgnoreCase) ? "bg-danger" : "bg-secondary")">
+          @u.VaiTro
+        </span>
+      </td>
+      <td>@(u.NgayTao.ToString("dd/MM/yyyy HH:mm"))</td>
+      <td class="d-flex gap-1">
+        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@u.NguoiDungID">Sửa</a>
+        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@u.NguoiDungID">Xóa</a>
+
+        <form asp-action="SetAdmin" method="post" class="ms-1">
+          @Html.AntiForgeryToken()
+          <input type="hidden" name="id" value="@u.NguoiDungID" />
+          @if (!string.Equals(u.VaiTro,"Admin",StringComparison.OrdinalIgnoreCase))
+          {
+            <button class="btn btn-sm btn-outline-dark">Nâng Admin</button>
+          }
+          else
+          {
+            <input type="hidden" name="makeAdmin" value="false" />
+            <button class="btn btn-sm btn-outline-secondary">Hạ DocGia</button>
+          }
+        </form>
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>

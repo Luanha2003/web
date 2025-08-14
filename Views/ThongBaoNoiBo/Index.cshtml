@@ -1,0 +1,84 @@
+@{
+    ViewData["Title"] = ViewData["Title"] ?? "THÔNG BÁO - BÁO CÁO";
+}
+
+<div class="tbnb-breadcrumb small mb-2">
+    <i class="fa fa-home me-1"></i> <strong>Trang chủ</strong> / <span>THÔNG BÁO - BÁO CÁO</span>
+</div>
+
+<div class="row g-3">
+    <!-- LEFT -->
+    <div class="col-12 col-lg-9">
+        <div class="tbnb-list">
+            <div class="item">Thông báo Kết quả tuyển chọn tổ chức chủ trì, cá nhân chủ nhiệm nhiệm vụ khoa học và công nghệ cấp bộ năm 2024 (23/10/2023)</div>
+            <div class="item">Thông báo Kết quả tuyển chọn tổ chức chủ trì, cá nhân chủ nhiệm nhiệm vụ khoa học và công nghệ cấp bộ năm 2024 (23/10/2023)</div>
+            <div class="item">Vụng việc số KMT.2024.06.07 (23/10/2023)</div>
+            <div class="item">Thông báo Kết quả tuyển chọn tổ chức chủ trì, cá nhân chủ nhiệm nhiệm vụ khoa học và công nghệ cấp bộ năm 2024 lĩnh vực Tài nguyên nước (23/10/2023)</div>
+            <div class="item">Thông báo hợp (15/08/2023)</div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-3 tbnb-pagination">
+            <ul class="pagination pagination-sm">
+                <li class="page-item disabled"><a class="page-link" href="#">Đầu</a></li>
+                <li class="page-item active"><span class="page-link">1</span></li>
+                <li class="page-item disabled"><a class="page-link" href="#">Cuối</a></li>
+            </ul>
+        </nav>
+
+        <!-- Search form -->
+        <div class="card mt-4">
+            <div class="card-header fw-semibold">TÌM KIẾM THÔNG TIN</div>
+            <div class="card-body">
+                <form class="row g-3 align-items-end">
+                    <div class="col-12">
+                        <label class="form-label small">Từ khóa</label>
+                        <input class="form-control" placeholder="Nhập từ khóa tìm kiếm..." />
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label small">Từ ngày</label>
+                        <input class="form-control" type="date" placeholder="nn/mm/yyyy" />
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label small">Đến ngày</label>
+                        <input class="form-control" type="date" placeholder="nn/mm/yyyy" />
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label class="form-label small">Bản ghi</label>
+                        <input class="form-control" type="number" value="10" min="1" />
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <button class="btn btn-primary w-100" type="button">Tìm kiếm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-12 col-lg-3 tbnb-side">
+        <div class="card border-0 tbnb-hotline">
+            <div class="card-body">
+                <div class="fw-bold mb-2">TIẾP NHẬN HỖ TRỢ XỬ LÝ SỰ CỐ ATTT</div>
+                <div class="small">Trung tâm CSHT và Bảo đảm ATTT</div>
+                <div class="small">ĐT: <strong>024.37596868</strong> (ext: 1005)</div>
+                <div class="small">Email: <strong>cit@monre.gov.vn</strong></div>
+                <hr class="border-light opacity-50" />
+                <div class="small fw-bold">TIẾP NHẬN BÁO CÁO SỰ CỐ</div>
+                <div class="small">Phòng KHCN&ATTT</div>
+                <div class="small">ĐT: <strong>024.62897586</strong></div>
+                <div class="small">Email: <strong>attt@monre.gov.vn</strong></div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 mt-3">
+            <a class="btn btn-warning"><i class="fa fa-chart-line me-2"></i> Cải cách hành chính</a>
+            <a class="btn btn-warning"><i class="fa fa-handshake me-2"></i> Dịch vụ công</a>
+            <a class="btn btn-warning"><i class="fa fa-envelope me-2"></i> Hộp thư điện tử</a>
+            <a class="btn btn-warning"><i class="fa fa-database me-2"></i> Cổng dữ liệu mở ngành TNMT</a>
+            <a class="btn btn-warning"><i class="fa fa-book me-2"></i> Thư viện điện tử</a>
+            <a class="btn btn-warning"><i class="fa fa-rss me-2"></i> Tin mới thầu</a>
+            <a class="btn btn-warning"><i class="fa fa-chart-column me-2"></i> Báo cáo thống kê</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+@model WEB.Models.NguoiDung
+@{ ViewData["Title"] = "Xóa người dùng"; }
+
+<h2>Xóa người dùng</h2>
+<div class="alert alert-warning">
+  Bạn có chắc muốn xóa tài khoản <strong>@(Model.HoTen ?? Model.Email)</strong>?
+</div>
+
+<form asp-action="Delete" method="post">
+  @Html.AntiForgeryToken()
+  <input type="hidden" asp-for="NguoiDungID" />
+  <button class="btn btn-danger">Xóa</button>
+  <a class="btn btn-secondary" asp-action="Index">Hủy</a>
+</form>
