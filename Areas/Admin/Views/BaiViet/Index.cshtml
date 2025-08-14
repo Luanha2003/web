@@ -1,30 +1,41 @@
 @model IEnumerable<WEB.Models.BaiViet>
-@{ ViewData["Title"] = "Quản lý Bài viết"; }
+@{
+    ViewData["Title"] = "Quản lý Bài viết";
+}
 
 <h2>Quản lý Bài viết</h2>
-<p><a class="btn btn-success" asp-action="Create">+ Thêm mới</a></p>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Tiêu đề</th>
-      <th>Ngày đăng</th>
-      <th>Lượt xem</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  @foreach (var x in Model)
-  {
-    <tr>
-      <td>@x.TieuDe</td>
-      <td>@x.NgayDang.ToString("dd/MM/yyyy HH:mm")</td>
-      <td>@x.LuotXem</td>
-      <td>
-        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@x.BaiVietID">Sửa</a>
-        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@x.BaiVietID">Xóa</a>
-      </td>
-    </tr>
-  }
-  </tbody>
+<div class="mb-3">
+    <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })" class="btn btn-secondary">
+        Về Dashboard
+    </a>
+    <a href="@Url.Action("Create")" class="btn btn-success">
+        + Thêm mới
+    </a>
+</div>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Ngày đăng</th>
+            <th>Lượt xem</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.TieuDe</td>
+            <td>@item.NgayDang.ToString("dd/MM/yyyy HH:mm")</td>
+            <td>@item.LuotXem</td>
+            <td>
+                <a href="@Url.Action("Edit", new { id = item.BaiVietID })" class="btn btn-warning">Sửa</a>
+                <a href="@Url.Action("Delete", new { id = item.BaiVietID })" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
 </table>
