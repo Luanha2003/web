@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using WEB.Models; // NewsDbContext
 
@@ -15,6 +16,8 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+    // Nếu deploy HTTPS, có thể bật:
+    // options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 builder.Services.AddControllersWithViews();
@@ -32,7 +35,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseSession(); // BẬT SESSION trước Authorization
+
+// BẬT SESSION trước Authorization
+app.UseSession();
 app.UseAuthorization();
 
 // ========== Routes ==========
@@ -50,13 +55,22 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<NewsDbContext>();
-    try { db.Database.Migrate(); } catch { /* ignore */ }
+    try
+    {
+        db.Database.Migrate();
+    }
+    catch
+    {
+        // Ignore migration errors at startup (optional)
+    }
+
     if (!db.NguoiDungs.Any(u => u.Email == "admin@site.com"))
     {
-        db.NguoiDungs.Add(new NguoiDung {
+        db.NguoiDungs.Add(new NguoiDung
+        {
             HoTen = "Quản trị",
             Email = "admin@site.com",
-            MatKhau = "123456", // DEMO ONLY
+            MatKhau = "123456", // DEMO ONLY - PRODUCTION: hash password!
             VaiTro = "Admin",
             NgayTao = DateTime.Now
         });

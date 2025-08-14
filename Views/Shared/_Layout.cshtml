@@ -1,67 +1,29 @@
-﻿@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor HttpAccessor
-@{
-    var userName = HttpAccessor.HttpContext?.Session.GetString("UserName");
-    var userRole = HttpAccessor.HttpContext?.Session.GetString("UserRole");
+﻿@{
+    Layout = null;
+    var title = ViewData["Title"] as string ?? "News";
 }
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - News Website</title>
+    <title>@title</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light main-nav">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">News</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<body class="bg-light d-flex flex-column min-vh-100">
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-                </ul>
+    @await Html.PartialAsync("_Header")
 
-                @* Menu Admin *@
-                @if (!string.IsNullOrEmpty(userRole) && userRole.Equals("Admin", StringComparison.OrdinalIgnoreCase))
-                {
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Quản trị</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="Admin" asp-controller="BaiViet" asp-action="Index">Quản lý Bài viết</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                }
-
-                <ul class="navbar-nav ms-auto">
-                    @if (!string.IsNullOrEmpty(userName))
-                    {
-                        <li class="nav-item"><span class="navbar-text">Xin chào, @userName</span></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Logout">Đăng xuất</a></li>
-                    }
-                    else
-                    {
-                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Login">Đăng nhập</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Register">Đăng ký</a></li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container my-4">
-        <main role="main" class="pb-3">
+    <main class="flex-grow-1">
+        <div class="container py-3">
             @RenderBody()
-        </main>
-    </div>
+        </div>
+    </main>
+
+    @await Html.PartialAsync("_Footer")
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
