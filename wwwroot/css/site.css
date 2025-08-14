@@ -40,3 +40,29 @@
 /* Minor helpers */
 .nav-underline .nav-link{ border-bottom:3px solid transparent; }
 .nav-underline .nav-link:hover{ border-bottom-color:#0d56cb; }
+
+/* Intro page */
+.intro-breadcrumb { color:#3b3b3b; }
+.intro-list .list-group-item { border: 1px solid #eee; border-left: 4px solid #e5e5e5; }
+.intro-list .list-group-item:hover { background:#fafafa; }
+.intro-hotline {
+    background: #e15a26; /* cam đỏ như ảnh */
+    border-radius: 8px;
+}
+.intro-hotline .card-body { background: transparent; }
+/* ===== Intro Page (Giới thiệu) ===== */
+.intro-breadcrumb { color:#3b3b3b; }
+.intro-card{
+    background:#fff; border:1px solid #e9ecef; border-radius:10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.03);
+}
+.intro-item .intro-title{
+    color:#0b3d91; /* xanh đậm nhã */
+}
+.intro-item .intro-date{
+    font-weight:600; letter-spacing:.2px;
+}
+.intro-hotline{
+    background:#e15a26; border-radius: 8px;
+}
+.intro-hotline .card-body{ background:transparent; }

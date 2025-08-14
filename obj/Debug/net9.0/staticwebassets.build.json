@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ysFx9JDiTs2kHk9qSmq9S2XQFG5yrS55A86qSKmGbN0=",
+  "Hash": "ytnLR9+EQoyPC8jJSTwV01yxhRkNmK3wbHUYMsQIkKw=",
   "Source": "web",
   "BasePath": "_content/web",
   "Mode": "Default",
@@ -1151,12 +1151,12 @@
       "OriginalItemSpec": "C:\\Users\\acer\\Downloads\\web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Identity": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-q2m02a1w3s.gz",
+      "Identity": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-iiamqmktn3.gz",
       "SourceId": "web",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/web",
-      "RelativePath": "css/site#[.{fingerprint=q2m02a1w3s}]?.css.gz",
+      "RelativePath": "css/site#[.{fingerprint=iiamqmktn3}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -1165,8 +1165,8 @@
       "RelatedAsset": "C:\\Users\\acer\\Downloads\\web\\wwwroot\\css\\site.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "i0u02tqhlp",
-      "Integrity": "8k2LgH7v7x524+dXZuyroVIeoTwaeU0daO1we5OJldI=",
+      "Fingerprint": "s6ab95y44o",
+      "Integrity": "rPquwlydvebwgBtnA6Z4NsA3nEdhsfo4t+PVrRRoiZ0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\acer\\Downloads\\web\\wwwroot\\css\\site.css"
@@ -1417,8 +1417,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "q2m02a1w3s",
-      "Integrity": "PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk=",
+      "Fingerprint": "iiamqmktn3",
+      "Integrity": "utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -2729,12 +2729,12 @@
   "Endpoints": [
     {
       "Route": "css/site.css",
-      "AssetFile": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-q2m02a1w3s.gz",
+      "AssetFile": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-iiamqmktn3.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.001639344262"
+          "Quality": "0.001119820829"
         }
       ],
       "ResponseHeaders": [
@@ -2744,15 +2744,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "609"
+          "Value": "892"
         },
         {
           "Name": "ETag",
-          "Value": "\"8k2LgH7v7x524+dXZuyroVIeoTwaeU0daO1we5OJldI=\""
+          "Value": "\"rPquwlydvebwgBtnA6Z4NsA3nEdhsfo4t+PVrRRoiZ0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 14 Aug 2025 03:40:56 GMT"
+          "Value": "Thu, 14 Aug 2025 04:18:21 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2772,13 +2772,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk=\""
+          "Value": "W/\"utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk="
+          "Value": "sha256-utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8="
         }
       ]
     },
@@ -2793,7 +2793,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1495"
+          "Value": "2336"
         },
         {
           "Name": "Content-Type",
@@ -2801,11 +2801,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk=\""
+          "Value": "\"utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 14 Aug 2025 03:40:56 GMT"
+          "Value": "Thu, 14 Aug 2025 04:18:21 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2815,13 +2815,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk="
+          "Value": "sha256-utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8="
         }
       ]
     },
     {
       "Route": "css/site.css.gz",
-      "AssetFile": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-q2m02a1w3s.gz",
+      "AssetFile": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-iiamqmktn3.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2830,7 +2830,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "609"
+          "Value": "892"
         },
         {
           "Name": "Content-Type",
@@ -2838,11 +2838,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"8k2LgH7v7x524+dXZuyroVIeoTwaeU0daO1we5OJldI=\""
+          "Value": "\"rPquwlydvebwgBtnA6Z4NsA3nEdhsfo4t+PVrRRoiZ0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 14 Aug 2025 03:40:56 GMT"
+          "Value": "Thu, 14 Aug 2025 04:18:21 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2860,18 +2860,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-8k2LgH7v7x524+dXZuyroVIeoTwaeU0daO1we5OJldI="
+          "Value": "sha256-rPquwlydvebwgBtnA6Z4NsA3nEdhsfo4t+PVrRRoiZ0="
         }
       ]
     },
     {
-      "Route": "css/site.q2m02a1w3s.css",
-      "AssetFile": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-q2m02a1w3s.gz",
+      "Route": "css/site.iiamqmktn3.css",
+      "AssetFile": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-iiamqmktn3.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.001639344262"
+          "Quality": "0.001119820829"
         }
       ],
       "ResponseHeaders": [
@@ -2881,15 +2881,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "609"
+          "Value": "892"
         },
         {
           "Name": "ETag",
-          "Value": "\"8k2LgH7v7x524+dXZuyroVIeoTwaeU0daO1we5OJldI=\""
+          "Value": "\"rPquwlydvebwgBtnA6Z4NsA3nEdhsfo4t+PVrRRoiZ0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 14 Aug 2025 03:40:56 GMT"
+          "Value": "Thu, 14 Aug 2025 04:18:21 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2909,13 +2909,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk=\""
+          "Value": "W/\"utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "q2m02a1w3s"
+          "Value": "iiamqmktn3"
         },
         {
           "Name": "label",
@@ -2923,12 +2923,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk="
+          "Value": "sha256-utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8="
         }
       ]
     },
     {
-      "Route": "css/site.q2m02a1w3s.css",
+      "Route": "css/site.iiamqmktn3.css",
       "AssetFile": "C:\\Users\\acer\\Downloads\\web\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2938,7 +2938,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1495"
+          "Value": "2336"
         },
         {
           "Name": "Content-Type",
@@ -2946,11 +2946,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk=\""
+          "Value": "\"utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 14 Aug 2025 03:40:56 GMT"
+          "Value": "Thu, 14 Aug 2025 04:18:21 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2960,7 +2960,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "q2m02a1w3s"
+          "Value": "iiamqmktn3"
         },
         {
           "Name": "label",
@@ -2968,13 +2968,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-PtZXIYKSotvgcYtkHhthSPfTQeXMra0QAlczXkLw4bk="
+          "Value": "sha256-utABRAmT4tlX/nN5OXda6l07n60BSeQsWbTJypvZ+D8="
         }
       ]
     },
     {
-      "Route": "css/site.q2m02a1w3s.css.gz",
-      "AssetFile": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-q2m02a1w3s.gz",
+      "Route": "css/site.iiamqmktn3.css.gz",
+      "AssetFile": "C:\\Users\\acer\\Downloads\\web\\obj\\Debug\\net9.0\\compressed\\rx872ba60m-iiamqmktn3.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2983,7 +2983,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "609"
+          "Value": "892"
         },
         {
           "Name": "Content-Type",
@@ -2991,11 +2991,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"8k2LgH7v7x524+dXZuyroVIeoTwaeU0daO1we5OJldI=\""
+          "Value": "\"rPquwlydvebwgBtnA6Z4NsA3nEdhsfo4t+PVrRRoiZ0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 14 Aug 2025 03:40:56 GMT"
+          "Value": "Thu, 14 Aug 2025 04:18:21 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3013,7 +3013,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "q2m02a1w3s"
+          "Value": "iiamqmktn3"
         },
         {
           "Name": "label",
@@ -3021,7 +3021,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-8k2LgH7v7x524+dXZuyroVIeoTwaeU0daO1we5OJldI="
+          "Value": "sha256-rPquwlydvebwgBtnA6Z4NsA3nEdhsfo4t+PVrRRoiZ0="
         }
       ]
     },

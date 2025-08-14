@@ -1,0 +1,138 @@
+@{
+    ViewData["Title"] = "Thông tin giới thiệu";
+    string D(DateTime d) => d.ToString("dd/MM/yyyy");
+}
+
+<div class="intro-breadcrumb small mb-2">
+    <i class="fa fa-home me-1"></i> <strong>Trang chủ</strong> / <span>Thông tin giới thiệu</span>
+</div>
+
+<div class="row g-3">
+    <!-- LEFT -->
+    <div class="col-12 col-lg-9">
+        <div class="intro-card p-3 p-md-4">
+
+            <!-- 1 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h3 class="intro-title mb-1">QUÁ TRÌNH PHÁT TRIỂN</h3>
+                <div class="intro-date badge bg-light text-dark">09/07/2024</div>
+                <p class="mt-3 mb-0">
+                    Khái quát lịch sử hình thành và phát triển của Bộ Tài nguyên và Môi trường
+                </p>
+            </div>
+
+            <!-- 2 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h5 class="intro-title mb-1">
+                    Cục Chuyển đổi số và Thông tin dữ liệu TNMT tiếp nhận 02 công chức và bổ nhiệm giữ chức vụ lãnh đạo, quản lý
+                </h5>
+                <div class="intro-date badge bg-light text-dark">09/07/2024</div>
+                <p class="mt-3 mb-0">
+                    Sáng ngày 01/7/2024, Cục Chuyển đổi số và Thông tin dữ liệu TNMT đã công bố Quyết định tiếp nhận, bổ nhiệm có thời hạn ông Lê Minh Quang, Phó Giám đốc Trung tâm Cơ sở hạ tầng và Bảo đảm an toàn thông tin và ông Nhâm Ngọc Tân, Phó Giám đốc Trung tâm Công nghệ phần mềm và Nền tảng số.
+                    Thực hiện theo nội dung công văn số 3722/BTNMT-TCCB ngày 10/6/2024 về việc tiếp nhận vào làm công chức để bổ nhiệm giữ chức vụ lãnh đạo, quản lý.
+                </p>
+            </div>
+
+            <!-- 3 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h5 class="intro-title mb-1">Lịch sử hình thành</h5>
+                <div class="intro-date badge bg-light text-dark">09/07/2024</div>
+            </div>
+
+            <!-- 4 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h5 class="intro-title mb-1">Lời giới thiệu</h5>
+                <div class="intro-date badge bg-light text-dark">09/07/2024</div>
+            </div>
+
+            <!-- 5 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h5 class="intro-title mb-1">Chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức</h5>
+                <div class="intro-date badge bg-light text-dark">09/07/2024</div>
+            </div>
+
+            <!-- 6 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h5 class="intro-title mb-1">Phòng Chuyển đổi số</h5>
+                <div class="intro-date badge bg-light text-dark">09/07/2024</div>
+            </div>
+
+            <!-- 7 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h5 class="intro-title mb-1">Trung tâm Cơ sở hạ tầng và Bảo đảm an toàn thông tin</h5>
+                <div class="intro-date badge bg-light text-dark">09/07/2024</div>
+            </div>
+
+            <!-- 8 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h5 class="intro-title mb-1">Chức năng nhiệm vụ</h5>
+                <div class="intro-date badge bg-light text-dark">05/07/2024</div>
+            </div>
+
+            <!-- 9 -->
+            <div class="intro-item mb-4 pb-4 border-bottom">
+                <h5 class="intro-title mb-1">Chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức</h5>
+                <div class="intro-date badge bg-light text-dark">05/07/2024</div>
+            </div>
+
+            <!-- 10 -->
+            <div class="intro-item">
+                <h5 class="intro-title mb-1">Giới thiệu chung</h5>
+                <div class="intro-date badge bg-light text-dark">05/07/2024</div>
+            </div>
+
+        </div>
+
+        <!-- (Tuỳ chọn) Form tìm kiếm giống mẫu -->
+        <div class="card mt-4">
+            <div class="card-header fw-semibold">TÌM KIẾM THÔNG TIN</div>
+            <div class="card-body">
+                <form class="row g-3 align-items-end">
+                    <div class="col-12 col-md-4">
+                        <label class="form-label small">Từ ngày:</label>
+                        <input class="form-control" type="date" />
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label small">Đến ngày:</label>
+                        <input class="form-control" type="date" />
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label class="form-label small">Số bản ghi:</label>
+                        <input class="form-control" type="number" value="10" min="1" />
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <button class="btn btn-primary w-100" type="button">Tìm kiếm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-12 col-lg-3">
+        <div class="d-grid gap-2">
+            <a class="btn btn-warning text-start fw-semibold"><i class="fa fa-book me-2"></i> Cải cách hành chính</a>
+            <a class="btn btn-warning text-start fw-semibold"><i class="fa fa-handshake me-2"></i> Dịch vụ công</a>
+            <a class="btn btn-warning text-start fw-semibold"><i class="fa fa-file-signature me-2"></i> Hợp thư điện tử</a>
+            <a class="btn btn-warning text-start fw-semibold"><i class="fa fa-briefcase me-2"></i> Hệ số công việc</a>
+            <a class="btn btn-warning text-start fw-semibold"><i class="fa fa-building me-2"></i> Cổng dịch vụ</a>
+            <a class="btn btn-warning text-start fw-semibold"><i class="fa fa-envelope me-2"></i> Thư viện điện tử</a>
+            <a class="btn btn-warning text-start fw-semibold"><i class="fa fa-rss me-2"></i> Tin mới thầu</a>
+            <a class="btn btn-warning text-start fw-semibold"><i class="fa fa-chart-bar me-2"></i> Báo cáo thống kê</a>
+        </div>
+
+        <div class="card mt-3 border-0 intro-hotline">
+            <div class="card-body">
+                <div class="fw-bold text-white mb-2">TIẾP NHẬN HỖ TRỢ XỬ LÝ SỰ CỐ ATTT</div>
+                <div class="text-white small">Trung tâm CSHT và Bảo đảm ATTT</div>
+                <div class="text-white small">ĐT: <strong>024.37596868</strong> (ext: 1005)</div>
+                <div class="text-white small">Email: <strong>cit@monre.gov.vn</strong></div>
+                <hr class="border-light opacity-50" />
+                <div class="text-white small fw-bold">TIẾP NHẬN BÁO CÁO SỰ CỐ</div>
+                <div class="text-white small">Phòng KHCN&ATTT</div>
+                <div class="text-white small">ĐT: <strong>024.62897586</strong></div>
+                <div class="text-white small">Email: <strong>attt@monre.gov.vn</strong></div>
+            </div>
+        </div>
+    </div>
+</div>

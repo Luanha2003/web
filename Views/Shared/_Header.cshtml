@@ -1,9 +1,9 @@
 @using Microsoft.AspNetCore.Http
 @{
-    var userName = Context.Session.GetString("UserName"); // đổi key nếu bạn lưu khác
+    var userName = Context.Session.GetString("UserName");
+    var userRole = Context.Session.GetString("UserRole"); // Đọc vai trò từ Session
 }
 <header class="header-cds">
-    <!-- Dải banner xanh -->
     <div class="header-top">
         <div class="container d-flex align-items-center justify-content-between gap-3 py-2">
             <div class="d-flex align-items-center gap-3">
@@ -24,19 +24,24 @@
                     <a class="flag" title="English" href="#"><img src="https://flagcdn.com/w20/gb.png" alt="EN" /></a>
                 </div>
 
-                <!-- Search -->
                 <form asp-area="" asp-controller="Home" asp-action="Search" method="get" class="d-none d-md-flex align-items-center ms-2">
                     <input class="form-control form-control-sm rounded-1" name="q" placeholder="Nhập từ khóa tìm kiếm..." />
                     <button class="btn btn-sm btn-light ms-1"><i class="fa fa-search"></i></button>
                 </form>
 
-                <!-- Auth -->
                 <div class="ms-2 d-flex align-items-center">
                     @if (!string.IsNullOrEmpty(userName))
                     {
                         <span class="text-white small me-2">Xin chào, <strong>@userName</strong></span>
 
-                        <!-- Đăng xuất: POST + AntiForgery -->
+                        @* Nút Về trang quản trị chỉ cho Admin *@
+                        @if (!string.IsNullOrEmpty(userRole) && userRole.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <a class="btn btn-sm btn-warning me-2" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                                Về trang quản trị
+                            </a>
+                        }
+
                         <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="m-0 p-0">
                             @Html.AntiForgeryToken()
                             <button type="submit" class="btn btn-sm btn-outline-light">Đăng xuất</button>
@@ -52,17 +57,17 @@
         </div>
     </div>
 
-    <!-- Menu chính -->
     <nav class="header-menu">
         <div class="container">
             <ul class="nav nav-underline justify-content-start gap-3 fw-semibold">
                 <li class="nav-item">
-                    <!-- Quan trọng: asp-area="" để thoát khỏi Admin Area -->
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                         <i class="fa fa-home me-1"></i> TRANG CHỦ
                     </a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="#">GIỚI THIỆU</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="GioiThieu" asp-action="Index">GIỚI THIỆU</a>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="#">TIN TỨC - SỰ KIỆN</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">VĂN BẢN QUẢN LÝ</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">CHIẾN LƯỢC - QUY HOẠCH</a></li>
