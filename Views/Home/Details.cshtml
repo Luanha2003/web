@@ -1,40 +1,46 @@
 @model WEB.Controllers.PostDetailsVM
-@{
-    ViewData["Title"] = Model.Post.TieuDe;
-}
-<div class="row">
-    <div class="col-lg-8">
-        <article class="mb-4">
-            <h2 class="mb-3">@Model.Post.TieuDe</h2>
-            <div class="text-muted mb-3">
-                <span>Đăng lúc: @Model.Post.NgayDang.ToString("dd/MM/yyyy HH:mm")</span>
-                <span class="ms-3">Lượt xem: @Model.Post.LuotXem</span>
-            </div>
-            @if (!string.IsNullOrWhiteSpace(Model.Post.HinhAnh))
+
+<div class="row g-3">
+    <div class="col-12 col-lg-8">
+        <div class="card shadow-sm">
+            @if (!string.IsNullOrEmpty(Model.Image))
             {
-                <img src="@Model.Post.HinhAnh" alt="@Model.Post.TieuDe" class="img-fluid mb-3 rounded" />
+                <img class="card-img-top" src="@Model.Image" alt="@Model.Title" />
             }
-            <div style="white-space:pre-wrap">@Model.Post.NoiDung</div>
-        </article>
-        <a class="btn btn-secondary" asp-action="Index">← Quay lại</a>
+            <div class="card-body">
+                <h3 class="fw-bold">@Model.Title</h3>
+                <div class="text-muted small mb-3">
+                    @Model.Date.ToString("dd/MM/yyyy HH:mm")
+                    @if (!string.IsNullOrWhiteSpace(Model.ChuyenMucTen)) { <text> • @Model.ChuyenMucTen</text>; }
+                    <text> • @Model.LuotXem lượt xem</text>
+                </div>
+                <div class="content">
+                    @Html.Raw(Model.Content)
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="col-lg-4">
-        <h5 class="mb-3">Bài viết mới</h5>
-        <div class="vstack gap-3">
-            @foreach (var p in Model.Latest)
-            {
-                <div class="d-flex gap-2">
-                    @if (!string.IsNullOrWhiteSpace(p.HinhAnh))
+    <div class="col-12 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-header fw-semibold">Bài viết liên quan</div>
+            <div class="list-group list-group-flush">
+                @if (Model.Related.Any())
+                {
+                    foreach (var r in Model.Related)
                     {
-                        <img src="@p.HinhAnh" alt="@p.TieuDe" style="width:80px;height:60px;object-fit:cover" class="rounded" />
+                        <a class="list-group-item list-group-item-action"
+                           asp-controller="Home" asp-action="Details" asp-route-id="@r.Id">
+                            <div class="fw-semibold">@r.Title</div>
+                            <div class="text-muted xsmall">@r.Date.ToString("dd/MM/yyyy HH:mm")</div>
+                        </a>
                     }
-                    <div>
-                        <a class="fw-semibold text-decoration-none" asp-action="Details" asp-route-id="@p.BaiVietID">@p.TieuDe</a>
-                        <div class="small text-muted">@p.NgayDang.ToString("dd/MM/yyyy")</div>
-                    </div>
-                </div>
-            }
+                }
+                else
+                {
+                    <div class="p-3 text-muted small">Chưa có bài liên quan.</div>
+                }
+            </div>
         </div>
     </div>
 </div>

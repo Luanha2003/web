@@ -84,3 +84,31 @@
 .tbnb-pagination .page-link{ min-width:44px; text-align:center; }
 .tbnb-side .btn-warning{ font-weight:600; text-align:left; }
 .tbnb-hotline { background:#e15a26; border-radius:8px; color:#fff; }
+/* ===== Home ===== */
+.xsmall{font-size:.78rem;}
+.home-side-list .list-group-item{border:0;border-top:1px solid #f0f0f0;}
+.home-side-list .list-group-item:first-child{border-top:0;}
+.home-feature img{max-height:320px;object-fit:cover;}
+.home-spot img{max-height:220px;object-fit:cover;}
+
+.section-head{
+  background:#fff;border-bottom:2px solid #d00; color:#0b1d4a; font-weight:700;
+}
+.home-news .list-group-item{border:0;border-top:1px solid #f1f1f1;}
+.home-news .list-group-item:first-child{border-top:0;}
+
+.home-docs .home-docs-head{
+  background: linear-gradient(135deg,#0c4fbf,#0a3f99);
+  color:#fff; font-weight:700;
+}
+.home-docs .list-group-item{border:0; color:#fff; background:linear-gradient(90deg,#0d5dd8,#0b4fb8);}
+.home-docs .list-group-item + .list-group-item{margin-top:6px;}
+.home-docs .list-group-item:hover{filter:brightness(1.05);}
+
+.home-cta-btn{
+  background: url('/images/cta-bg.png'), linear-gradient(90deg,#0a4fb9,#0a4fb9);
+  color:#fff; font-weight:600; border-radius:6px; padding:10px 16px;
+}
+
+/* small polish */
+.home-top .card{border-radius:10px;}

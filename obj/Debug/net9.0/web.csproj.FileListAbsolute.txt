@@ -383,6 +383,7 @@ C:\Users\acer\Downloads\web\obj\Debug\net9.0\web.sourcelink.json
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\scopedcss\bundle\web.styles.css
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\scopedcss\projectbundle\web.bundle.scp.css
+C:\Users\acer\Downloads\web\obj\Debug\net9.0\compressed\rx872ba60m-45059pqb4d.gz
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\compressed\1a1hbozscg-61n19gt1b8.gz
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\compressed\x1ysavzp2q-xtxxf3hu2r.gz
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\compressed\dl5z5kbzkv-t1cqhe9u97.gz
@@ -461,4 +462,3 @@ C:\Users\acer\Downloads\web\obj\Debug\net9.0\refint\web.dll
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\web.pdb
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\web.genruntimeconfig.cache
 C:\Users\acer\Downloads\web\obj\Debug\net9.0\ref\web.dll
-C:\Users\acer\Downloads\web\obj\Debug\net9.0\compressed\rx872ba60m-u0pfospujb.gz

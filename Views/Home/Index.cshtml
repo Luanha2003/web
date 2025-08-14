@@ -1,58 +1,163 @@
-﻿@model WEB.Controllers.HomeIndexVM
-@{
-    ViewData["Title"] = "Trang chủ";
-}
+﻿@model WEB.Controllers.HomeController.HomeVm
 
-<div class="row mb-3">
-    <div class="col-md-8">
-        <form method="get" class="d-flex gap-2">
-            <input type="text" name="q" value="@Model.Query" class="form-control" placeholder="Tìm bài viết..." />
-            <select name="categoryId" class="form-select" style="max-width:220px">
-                <option value="">-- Tất cả danh mục --</option>
-                @foreach (var c in Model.Categories)
+<div class="home-top row g-3">
+    <!-- LEFT list -->
+    <div class="col-12 col-lg-3">
+        <div class="card shadow-sm home-side-list">
+            <div class="card-header fw-semibold">Tin mới</div>
+            <div class="list-group list-group-flush">
+                @if (Model.LeftList.Any())
                 {
-                    <option value="@c.ChuyenMucID" selected="@(Model.CurrentCategoryId == c.ChuyenMucID)">
-                        @c.TenChuyenMuc
-                    </option>
+                    foreach (var p in Model.LeftList)
+                    {
+                        <a class="list-group-item list-group-item-action d-flex gap-2 align-items-start"
+                           asp-controller="Home" asp-action="Details" asp-route-id="@p.Id">
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold small">@p.Title</div>
+                                <div class="text-muted xsmall">@p.Date.ToString("dd/MM/yyyy")</div>
+                            </div>
+                            @if (!string.IsNullOrEmpty(p.Image))
+                            {
+                                <img src="@p.Image" class="rounded object-fit-cover" style="width:72px;height:48px" />
+                            }
+                        </a>
+                    }
                 }
-            </select>
-            <button class="btn btn-primary">Lọc</button>
-        </form>
+                else
+                {
+                    <div class="p-3 text-muted small">Chưa có dữ liệu.</div>
+                }
+            </div>
+        </div>
     </div>
-</div>
 
-@if (Model.Items.Count == 0)
-{
-    <div class="alert alert-info">Chưa có bài viết nào khớp điều kiện.</div>
-}
-else
-{
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var x in Model.Items)
+    <!-- FEATURE -->
+    <div class="col-12 col-lg-6">
+        @if (Model.Featured != null)
         {
-            <div class="col">
-                @await Html.PartialAsync("~/Views/Shared/_PostCard.cshtml", x)
+            <div class="card shadow-sm home-feature">
+                <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Featured.Id" class="text-decoration-none text-reset">
+                    @if (!string.IsNullOrEmpty(Model.Featured.Image))
+                    {
+                        <img class="card-img-top" src="@Model.Featured.Image" alt="@Model.Featured.Title" />
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">
+                            @Model.Featured.Title <span class="badge bg-danger ms-2">Mới</span>
+                        </h5>
+                        <p class="card-text text-muted">@Model.Featured.Summary</p>
+                    </div>
+                </a>
             </div>
         }
     </div>
 
-    <!-- Phân trang -->
-    <nav class="mt-4">
-        <ul class="pagination">
-            <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { page = Model.Page - 1, pageSize = Model.PageSize, categoryId = Model.CurrentCategoryId, q = Model.Query })">Trước</a>
-            </li>
+    <!-- RIGHT spot -->
+    <div class="col-12 col-lg-3">
+        @if (Model.RightSpot != null)
+        {
+            <div class="card shadow-sm home-spot">
+                <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.RightSpot.Id" class="text-decoration-none text-reset">
+                    @if (!string.IsNullOrEmpty(Model.RightSpot.Image))
+                    {
+                        <img class="card-img-top" src="@Model.RightSpot.Image" alt="@Model.RightSpot.Title" />
+                    }
+                    <div class="card-body">
+                        <div class="fw-semibold">@Model.RightSpot.Title</div>
+                        <div class="text-muted small mt-1">@Model.RightSpot.Summary</div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
 
-            @for (var i = 1; i <= Model.TotalPages; i++)
-            {
-                <li class="page-item @(i == Model.Page ? "active" : "")">
-                    <a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = Model.PageSize, categoryId = Model.CurrentCategoryId, q = Model.Query })">@i</a>
-                </li>
-            }
+<!-- CTA ribbon -->
+<div class="home-cta container-xxl mt-3">
+    <div class="row g-2">
+        <div class="col-12 col-md-4">
+            <a class="btn w-100 home-cta-btn" href="#">Lấy ý kiến người dân</a>
+        </div>
+        <div class="col-12 col-md-4">
+            <a class="btn w-100 home-cta-btn" href="#">Hỏi đáp</a>
+        </div>
+        <div class="col-12 col-md-4">
+            <a class="btn w-100 home-cta-btn" href="#">Thông tin xử phạt</a>
+        </div>
+    </div>
+</div>
 
-            <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { page = Model.Page + 1, pageSize = Model.PageSize, categoryId = Model.CurrentCategoryId, q = Model.Query })">Sau</a>
-            </li>
-        </ul>
-    </nav>
-}
+<!-- 3 columns sections -->
+<div class="row g-3 mt-2">
+    <div class="col-12 col-lg-3 order-2 order-lg-4">
+        <!-- Tài liệu -->
+        <div class="home-docs card shadow-sm">
+            <div class="card-header home-docs-head">TÀI LIỆU</div>
+            <div class="list-group list-group-flush">
+                @foreach (var d in Model.TaiLieu)
+                {
+                    <a class="list-group-item list-group-item-action" href="#">
+                        <i class="fa fa-file-lines me-2"></i>@d
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-3">
+        <div class="home-section card shadow-sm">
+            <div class="card-header section-head">TIN TỨC HOẠT ĐỘNG</div>
+            <div class="list-group list-group-flush home-news">
+                @foreach (var p in Model.TinTucHoatDong)
+                {
+                    <a class="list-group-item list-group-item-action"
+                       asp-controller="Home" asp-action="Details" asp-route-id="@p.Id">
+                        <div class="fw-semibold">@p.Title</div>
+                        <div class="text-muted xsmall mt-1">@p.Date.ToString("dd/MM/yyyy HH:mm")</div>
+                    </a>
+                }
+            </div>
+            <div class="card-body py-2"><a class="small" href="#">Xem thêm »</a></div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-3">
+        <div class="home-section card shadow-sm">
+            <div class="card-header section-head">QUẢN LÝ ỨNG DỤNG CNTT</div>
+            <div class="list-group list-group-flush home-news">
+                @foreach (var p in Model.QuanLyUngDungCNTT)
+                {
+                    <a class="list-group-item list-group-item-action"
+                       asp-controller="Home" asp-action="Details" asp-route-id="@p.Id">
+                        <div class="fw-semibold">@p.Title</div>
+                        <div class="text-muted xsmall mt-1">@p.Date.ToString("dd/MM/yyyy HH:mm")</div>
+                    </a>
+                }
+            </div>
+            <div class="card-body py-2"><a class="small" href="#">Xem thêm »</a></div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-3">
+        <div class="home-section card shadow-sm">
+            <div class="card-header section-head">CƠ SỞ DỮ LIỆU TNMT</div>
+            <div class="list-group list-group-flush home-news">
+                @foreach (var p in Model.CoSoDuLieuTNMT)
+                {
+                    <a class="list-group-item list-group-item-action d-flex align-items-center gap-2"
+                       asp-controller="Home" asp-action="Details" asp-route-id="@p.Id">
+                        @if(!string.IsNullOrEmpty(p.Image))
+                        {
+                            <img src="@p.Image" class="rounded object-fit-cover" style="width:72px;height:48px" />
+                        }
+                        <div>
+                            <div class="fw-semibold">@p.Title</div>
+                            <div class="text-muted xsmall mt-1">@p.Date.ToString("dd/MM/yyyy HH:mm")</div>
+                        </div>
+                    </a>
+                }
+            </div>
+            <div class="card-body py-2"><a class="small" href="#">Xem thêm »</a></div>
+        </div>
+    </div>
+</div>
