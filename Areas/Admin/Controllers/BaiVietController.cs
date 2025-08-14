@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WEB.Models;
 
@@ -9,6 +10,7 @@ namespace WEB.Areas.Admin.Controllers
         private readonly NewsDbContext _context;
         public BaiVietController(NewsDbContext context) => _context = context;
 
+        // GET: /Admin/BaiViet
         public IActionResult Index()
         {
             var gate = OnlyAdmin();
@@ -20,14 +22,17 @@ namespace WEB.Areas.Admin.Controllers
             return View(list);
         }
 
-        [HttpGet]
+        // GET: /Admin/BaiViet/Create
         public IActionResult Create()
         {
             var gate = OnlyAdmin();
             if (gate != null) return gate;
-            return View(new BaiViet { NgayDang = DateTime.Now });
+
+            ViewBag.ChuyenMucID = new SelectList(_context.ChuyenMucs.OrderBy(x => x.TenChuyenMuc), "ChuyenMucID", "TenChuyenMuc");
+            return View(new BaiViet());
         }
 
+        // POST: /Admin/BaiViet/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(BaiViet model)
@@ -35,48 +40,86 @@ namespace WEB.Areas.Admin.Controllers
             var gate = OnlyAdmin();
             if (gate != null) return gate;
 
-            if (!ModelState.IsValid) return View(model);
+            if (string.IsNullOrWhiteSpace(model.TieuDe))
+                ModelState.AddModelError(nameof(model.TieuDe), "Tiêu đề là bắt buộc");
+            if (model.ChuyenMucID <= 0)
+                ModelState.AddModelError(nameof(model.ChuyenMucID), "Vui lòng chọn chuyên mục");
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ChuyenMucID = new SelectList(_context.ChuyenMucs.OrderBy(x => x.TenChuyenMuc), "ChuyenMucID", "TenChuyenMuc", model.ChuyenMucID);
+                return View(model);
+            }
+
             model.NgayDang = DateTime.Now;
+            model.LuotXem = 0;
+
+            // Lấy TacGiaID từ session nếu có (tùy hệ thống)
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (int.TryParse(userIdStr, out var uid)) model.TacGiaID = uid;
+
             _context.BaiViets.Add(model);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        // GET: /Admin/BaiViet/Edit/5
         public IActionResult Edit(int id)
         {
             var gate = OnlyAdmin();
             if (gate != null) return gate;
 
-            var bv = _context.BaiViets.Find(id);
-            if (bv == null) return NotFound();
-            return View(bv);
+            var item = _context.BaiViets.Find(id);
+            if (item == null) return NotFound();
+
+            ViewBag.ChuyenMucID = new SelectList(_context.ChuyenMucs.OrderBy(x => x.TenChuyenMuc), "ChuyenMucID", "TenChuyenMuc", item.ChuyenMucID);
+            return View(item);
         }
 
+        // POST: /Admin/BaiViet/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(BaiViet model)
+        public IActionResult Edit(int id, BaiViet model)
         {
             var gate = OnlyAdmin();
             if (gate != null) return gate;
 
-            if (!ModelState.IsValid) return View(model);
-            _context.BaiViets.Update(model);
+            var item = _context.BaiViets.Find(id);
+            if (item == null) return NotFound();
+
+            if (string.IsNullOrWhiteSpace(model.TieuDe))
+                ModelState.AddModelError(nameof(model.TieuDe), "Tiêu đề là bắt buộc");
+            if (model.ChuyenMucID <= 0)
+                ModelState.AddModelError(nameof(model.ChuyenMucID), "Vui lòng chọn chuyên mục");
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ChuyenMucID = new SelectList(_context.ChuyenMucs.OrderBy(x => x.TenChuyenMuc), "ChuyenMucID", "TenChuyenMuc", model.ChuyenMucID);
+                return View(model);
+            }
+
+            item.TieuDe = model.TieuDe;
+            item.NoiDung = model.NoiDung;
+            item.HinhAnh = model.HinhAnh;
+            item.ChuyenMucID = model.ChuyenMucID;
+            // Giữ nguyên NgayDang, LuotXem, TacGiaID (nếu muốn sửa thì thêm input)
+
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        // GET: /Admin/BaiViet/Delete/5
         public IActionResult Delete(int id)
         {
             var gate = OnlyAdmin();
             if (gate != null) return gate;
 
-            var bv = _context.BaiViets.Find(id);
-            if (bv == null) return NotFound();
-            return View(bv);
+            var item = _context.BaiViets.Find(id);
+            if (item == null) return NotFound();
+            return View(item);
         }
 
+        // POST: /Admin/BaiViet/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

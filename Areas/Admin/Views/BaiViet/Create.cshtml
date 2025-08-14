@@ -10,6 +10,14 @@
   </div>
 
   <div class="mb-3">
+    <label class="form-label">Chuyên mục</label>
+    <select asp-for="ChuyenMucID" class="form-control" asp-items="ViewBag.ChuyenMucID">
+      <option value="">-- Chọn chuyên mục --</option>
+    </select>
+    <span asp-validation-for="ChuyenMucID" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
     <label class="form-label">Nội dung</label>
     <textarea asp-for="NoiDung" rows="8" class="form-control"></textarea>
     <span asp-validation-for="NoiDung" class="text-danger"></span>

@@ -1,0 +1,33 @@
+@model IEnumerable<WEB.Models.ChuyenMuc>
+@{ ViewData["Title"] = "Quản lý Danh mục"; }
+
+<h2>Quản lý Danh mục</h2>
+<p>
+  <a class="btn btn-primary" asp-action="Create">Thêm danh mục</a>
+  <a class="btn btn-secondary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Về Dashboard</a>
+</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên chuyên mục</th>
+      <th>Mô tả</th>
+      <th style="width:180px">Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+  @foreach (var x in Model)
+  {
+    <tr>
+      <td>@x.ChuyenMucID</td>
+      <td>@x.TenChuyenMuc</td>
+      <td>@x.MoTa</td>
+      <td>
+        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@x.ChuyenMucID">Sửa</a>
+        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@x.ChuyenMucID">Xóa</a>
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>
