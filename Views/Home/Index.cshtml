@@ -1,88 +1,58 @@
-﻿@{
-    ViewData["Title"] = "Trang Chủ";
+﻿@model WEB.Controllers.HomeIndexVM
+@{
+    ViewData["Title"] = "Trang chủ";
 }
 
-<div class="news-grid">
-    <div class="featured-news">
-        <div class="card">
-            <img src="https://via.placeholder.com/800x500" class="card-img-top" alt="Featured News Image">
-            <div class="card-body">
-                <h5 class="card-title">Đây là tiêu đề của bài viết nổi bật nhất, thu hút sự chú ý của người đọc</h5>
-                <p class="card-text">Nội dung tóm tắt cho bài viết nổi bật. Tin tức này đang rất được quan tâm và có ảnh hưởng lớn đến cộng đồng...</p>
-                <a href="#" class="btn btn-dark">Đọc thêm</a>
-            </div>
-        </div>
-    </div>
-    <div class="side-news">
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="https://via.placeholder.com/200x150" class="img-fluid rounded-start" alt="Side News Image 1">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title">Tiêu đề bài viết phụ thứ nhất</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="https://via.placeholder.com/200x150" class="img-fluid rounded-start" alt="Side News Image 2">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title">Tiêu đề bài viết phụ thứ hai</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="https://via.placeholder.com/200x150" class="img-fluid rounded-start" alt="Side News Image 3">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title">Tiêu đề bài viết phụ thứ ba</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="row mb-3">
+    <div class="col-md-8">
+        <form method="get" class="d-flex gap-2">
+            <input type="text" name="q" value="@Model.Query" class="form-control" placeholder="Tìm bài viết..." />
+            <select name="categoryId" class="form-select" style="max-width:220px">
+                <option value="">-- Tất cả danh mục --</option>
+                @foreach (var c in Model.Categories)
+                {
+                    <option value="@c.ChuyenMucID" selected="@(Model.CurrentCategoryId == c.ChuyenMucID)">
+                        @c.TenChuyenMuc
+                    </option>
+                }
+            </select>
+            <button class="btn btn-primary">Lọc</button>
+        </form>
     </div>
 </div>
 
-<h3 class="mt-5 mb-3">Tin Tức Mới Nhất</h3>
-<div class="row">
-    <div class="col-md-4 mb-4">
-        <div class="card">
-            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Latest News 1">
-            <div class="card-body">
-                <h5 class="card-title">Tiêu đề tin mới</h5>
-                <p class="card-text">Mô tả ngắn cho tin tức mới này.</p>
-                <a href="#" class="btn btn-outline-primary">Xem chi tiết</a>
+@if (Model.Items.Count == 0)
+{
+    <div class="alert alert-info">Chưa có bài viết nào khớp điều kiện.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var x in Model.Items)
+        {
+            <div class="col">
+                @await Html.PartialAsync("~/Views/Shared/_PostCard.cshtml", x)
             </div>
-        </div>
+        }
     </div>
-    <div class="col-md-4 mb-4">
-        <div class="card">
-            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Latest News 2">
-            <div class="card-body">
-                <h5 class="card-title">Tiêu đề tin mới</h5>
-                <p class="card-text">Mô tả ngắn cho tin tức mới này.</p>
-                <a href="#" class="btn btn-outline-primary">Xem chi tiết</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 mb-4">
-        <div class="card">
-            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Latest News 3">
-            <div class="card-body">
-                <h5 class="card-title">Tiêu đề tin mới</h5>
-                <p class="card-text">Mô tả ngắn cho tin tức mới này.</p>
-                <a href="#" class="btn btn-outline-primary">Xem chi tiết</a>
-            </div>
-        </div>
-    </div>
-</div>
+
+    <!-- Phân trang -->
+    <nav class="mt-4">
+        <ul class="pagination">
+            <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = Model.Page - 1, pageSize = Model.PageSize, categoryId = Model.CurrentCategoryId, q = Model.Query })">Trước</a>
+            </li>
+
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Page ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = Model.PageSize, categoryId = Model.CurrentCategoryId, q = Model.Query })">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = Model.Page + 1, pageSize = Model.PageSize, categoryId = Model.CurrentCategoryId, q = Model.Query })">Sau</a>
+            </li>
+        </ul>
+    </nav>
+}
