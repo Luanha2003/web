@@ -7,7 +7,6 @@
     int total  = users.Count;
     int admins = users.Count(u => string.Equals(u.VaiTro, "Admin", StringComparison.OrdinalIgnoreCase));
     int readers = users.Count(u => string.Equals(u.VaiTro, "DocGia", StringComparison.OrdinalIgnoreCase));
-    int others  = total - admins - readers;
 
     string RoleBadge(string? role)
     {
@@ -25,11 +24,12 @@
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1 class="h3 m-0">Quản lý Người dùng</h1>
         <div class="d-flex gap-2">
+            <a class="btn btn-outline-secondary"
+               asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                <i class="fa-solid fa-arrow-left me-1"></i> Về Dashboard
+            </a>
             <a class="btn btn-primary" asp-area="Admin" asp-controller="NguoiDung" asp-action="Create">
                 <i class="fa fa-user-plus me-1"></i> Thêm người dùng
-            </a>
-            <a class="btn btn-outline-secondary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
-                <i class="fa fa-gauge-high me-1"></i> Về Dashboard
             </a>
         </div>
     </div>
@@ -44,7 +44,7 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa fa-search"></i></span>
                             <input id="searchBox" type="text" class="form-control" placeholder="Nhập họ tên hoặc email để lọc nhanh..." />
-                            <button class="btn btn-soft-secondary" type="button" id="clearSearch">Xoá</button>
+                            <button class="btn btn-outline-secondary" type="button" id="clearSearch">Xoá</button>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
@@ -114,9 +114,7 @@
                     @if (!users.Any())
                     {
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-5">
-                                Chưa có người dùng nào.
-                            </td>
+                            <td colspan="6" class="text-center text-muted py-5">Chưa có người dùng nào.</td>
                         </tr>
                     }
                     else
@@ -134,13 +132,9 @@
                                 <td class="fw-semibold">@name</td>
                                 <td>
                                     @if (!string.IsNullOrWhiteSpace(email))
-                                    {
-                                        <a href="mailto:@email">@email</a>
-                                    }
+                                    { <a href="mailto:@email">@email</a> }
                                 </td>
-                                <td>
-                                    @Html.Raw(RoleBadge(role))
-                                </td>
+                                <td>@Html.Raw(RoleBadge(role))</td>
                                 <td>@(u.NgayTao == default ? "" : u.NgayTao.ToString("dd/MM/yyyy HH:mm"))</td>
                                 <td class="text-center">
                                     <div class="btn-group post-actions">
@@ -190,17 +184,20 @@
     const role = (roleSel.value || '').toLowerCase();
 
     rows.forEach(tr => {
-      const text = (tr.dataset.name + ' ' + tr.dataset.email);
+      const text = tr.dataset.name + ' ' + tr.dataset.email;
       const r = (tr.dataset.role || '').toLowerCase();
-      const matchText = !q || text.indexOf(q) >= 0;
-      const matchRole = !role || r === role || (role === 'khac' && r !== 'admin' && r !== 'docgia');
-      tr.style.display = matchText && matchRole ? '' : 'none';
+      const okText = !q || text.indexOf(q) >= 0;
+      const okRole = !role || r === role || (role === 'khac' && r !== 'admin' && r !== 'docgia');
+      tr.style.display = (okText && okRole) ? '' : 'none';
     });
   }
 
   searchBox?.addEventListener('input', applyFilter);
   roleSel?.addEventListener('change', applyFilter);
   clearBtn?.addEventListener('click', () => { searchBox.value = ''; applyFilter(); });
+
+  // init
+  applyFilter();
 })();
 </script>
 }
