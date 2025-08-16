@@ -1,0 +1,117 @@
+@using Microsoft.AspNetCore.Routing
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    string Active(string ctrl, string act = "Index") {
+        var rd = HttpContextAccessor.HttpContext?.GetRouteData();
+        var c = (rd?.Values["controller"]?.ToString() ?? "");
+        var a = (rd?.Values["action"]?.ToString() ?? "");
+        return (string.Equals(c, ctrl, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(a, act, StringComparison.OrdinalIgnoreCase))
+            ? "active" : "";
+    }
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(ViewData["Title"] ?? "Quản trị")</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<body>
+<div id="wrapper" class="d-flex">
+    <!-- SIDEBAR -->
+    <nav id="sidebar" class="sidebar open">
+        <div class="sidebar-header d-flex align-items-center justify-content-between px-3 py-3">
+            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="navbar-brand fw-bold m-0">
+                <i class="fa-solid fa-gauge-high me-2"></i>Admin
+            </a>
+            <button class="btn btn-sm btn-outline-secondary d-lg-none" id="btn-close">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+
+        <div class="p-2">
+            <div class="text-uppercase small text-muted px-2 mb-2">Điều hướng</div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link @Active("Dashboard")"
+                       asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                        <i class="fa-solid fa-chart-line me-2"></i> Bảng điều khiển
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @Active("BaiViet")"
+                       asp-area="Admin" asp-controller="BaiViet" asp-action="Index">
+                        <i class="fa-regular fa-newspaper me-2"></i> Quản lý Bài viết
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @Active("ChuyenMuc")"
+                       asp-area="Admin" asp-controller="ChuyenMuc" asp-action="Index">
+                        <i class="fa-solid fa-list me-2"></i> Quản lý Chuyên mục
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @Active("NguoiDung")"
+                       asp-area="Admin" asp-controller="NguoiDung" asp-action="Index">
+                        <i class="fa-solid fa-users me-2"></i> Quản lý Người dùng
+                    </a>
+                </li>
+            </ul>
+
+            <div class="text-uppercase small text-muted px-2 mt-3 mb-2">Tài khoản</div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-danger" asp-area="" asp-controller="Account" asp-action="Logout">
+                        <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="fa-solid fa-home me-2"></i> Về trang chính
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div id="content" class="flex-grow-1">
+        <header class="admin-topbar d-flex align-items-center justify-content-between px-3">
+            <button id="btn-toggle" class="btn btn-outline-secondary">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="d-flex align-items-center gap-3">
+                <span class="small text-muted">Xin chào, @(User?.Identity?.Name ?? "Quản trị")</span>
+            </div>
+        </header>
+
+        <main class="container-fluid py-4">
+            @RenderBody()
+        </main>
+    </div>
+</div>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function() {
+  const sidebar = document.getElementById('sidebar');
+  const btnToggle = document.getElementById('btn-toggle');
+  const btnClose  = document.getElementById('btn-close');
+  const open = () => { sidebar.classList.add('open'); document.body.classList.add('sidebar-open'); }
+  const close = () => { sidebar.classList.remove('open'); document.body.classList.remove('sidebar-open'); }
+  btnToggle.addEventListener('click', () => { sidebar.classList.contains('open') ? close() : open(); });
+  btnClose?.addEventListener('click', close);
+  document.addEventListener('click', (e) => {
+    if (!sidebar.contains(e.target) && !btnToggle.contains(e.target) && window.innerWidth < 992) close();
+  });
+})();
+</script>
+
+@RenderSection("Scripts", required: false)
+</body>
+</html>

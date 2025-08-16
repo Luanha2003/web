@@ -1,9 +1,170 @@
-@{ ViewData["Title"] = "Bảng điều khiển"; }
-<h2>Bảng điều khiển</h2>
-<p>Chào mừng đến trang quản trị.</p>
+@using System.Text.Json
+@model WEB.Areas.Admin.ViewModels.AdminDashboardVM
+@{
+    ViewData["Title"] = "Bảng điều khiển";
+}
 
-<div class="d-flex gap-2 flex-wrap">
-  <a class="btn btn-primary" asp-area="Admin" asp-controller="BaiViet" asp-action="Index">Quản lý Bài viết</a>
-  <a class="btn btn-outline-primary" asp-area="Admin" asp-controller="ChuyenMuc" asp-action="Index">Quản lý Danh mục</a>
-  <a class="btn btn-outline-dark" asp-area="Admin" asp-controller="NguoiDung" asp-action="Index">Quản lý Người dùng</a>
+<div class="container-fluid">
+    <h1 class="h3 mb-3">Bảng điều khiển</h1>
+    <p class="text-muted">Chào mừng đến trang quản trị.</p>
+
+    <!-- ====== Cards tổng quan ====== -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-muted small">Tổng bài viết</div>
+                            <div class="fs-3 fw-bold">@Model.TotalPosts</div>
+                        </div>
+                        <i class="fa-regular fa-newspaper fa-2xl text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-muted small">Tổng chuyên mục</div>
+                            <div class="fs-3 fw-bold">@Model.TotalCategories</div>
+                        </div>
+                        <i class="fa-solid fa-list fa-2xl text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-muted small">Tổng người dùng</div>
+                            <div class="fs-3 fw-bold">@Model.TotalUsers</div>
+                        </div>
+                        <i class="fa-solid fa-users fa-2xl text-dark"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="text-muted small">Bài viết hôm nay</div>
+                            <div class="fs-3 fw-bold">@Model.PostsToday</div>
+                        </div>
+                        <i class="fa-solid fa-calendar-day fa-2xl text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== Charts ====== -->
+    <div class="row g-3">
+        <div class="col-12 col-xl-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white">
+                    <strong>Xu hướng bài viết (7 ngày)</strong>
+                </div>
+                <div class="card-body">
+                    <canvas id="chartPosts7d" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white">
+                    <strong>Phân bổ vai trò người dùng</strong>
+                </div>
+                <div class="card-body">
+                    <canvas id="chartRoles" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white">
+                    <strong>Bài viết theo chuyên mục</strong>
+                </div>
+                <div class="card-body">
+                    <canvas id="chartCategories" height="120"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+    // Dữ liệu từ server -> JS
+    const dates7d   = @Html.Raw(JsonSerializer.Serialize(Model.RecentDates));
+    const counts7d  = @Html.Raw(JsonSerializer.Serialize(Model.RecentPostCounts));
+    const roleNames = @Html.Raw(JsonSerializer.Serialize(Model.RoleNames));
+    const roleVals  = @Html.Raw(JsonSerializer.Serialize(Model.RoleCounts));
+    const catNames  = @Html.Raw(JsonSerializer.Serialize(Model.CategoryNames));
+    const catVals   = @Html.Raw(JsonSerializer.Serialize(Model.CategoryCounts));
+
+    // 1) Line chart - posts last 7 days
+    new Chart(document.getElementById('chartPosts7d'), {
+        type: 'line',
+        data: {
+            labels: dates7d,
+            datasets: [{
+                label: 'Bài viết',
+                data: counts7d,
+                tension: 0.35,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, ticks: { precision:0 } }
+            }
+        }
+    });
+
+    // 2) Doughnut - roles
+    new Chart(document.getElementById('chartRoles'), {
+        type: 'doughnut',
+        data: {
+            labels: roleNames,
+            datasets: [{ data: roleVals }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+
+    // 3) Bar - categories
+    new Chart(document.getElementById('chartCategories'), {
+        type: 'bar',
+        data: {
+            labels: catNames,
+            datasets: [{
+                label: 'Số bài viết',
+                data: catVals
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display:false } },
+            scales: { y: { beginAtZero: true, ticks: { precision:0 } } }
+        }
+    });
+})();
+</script>

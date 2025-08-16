@@ -1,6 +1,12 @@
 using System;
+using System.Linq;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using WEB.Models; // NewsDbContext
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using WEB.Models; // NewsDbContext, NguoiDung
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,17 +57,18 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
 
-// === Optional: Seed an Admin account (runs on startup) ===
+// ========== Seed Admin (tùy chọn) ==========
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<NewsDbContext>();
+
     try
     {
         db.Database.Migrate();
     }
     catch
     {
-        // Ignore migration errors at startup (optional)
+        // Bỏ qua lỗi migration khi khởi động (tùy chọn)
     }
 
     if (!db.NguoiDungs.Any(u => u.Email == "admin@site.com"))
@@ -70,7 +77,7 @@ using (var scope = app.Services.CreateScope())
         {
             HoTen = "Quản trị",
             Email = "admin@site.com",
-            MatKhau = "123456", // DEMO ONLY - PRODUCTION: hash password!
+            MatKhau = "123456", // CHỈ DEMO — production phải hash mật khẩu
             VaiTro = "Admin",
             NgayTao = DateTime.Now
         });
@@ -79,3 +86,4 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+    
