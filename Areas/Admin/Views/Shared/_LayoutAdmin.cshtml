@@ -70,11 +70,7 @@
                         <i class="fa-solid fa-right-from-bracket me-2"></i> Đăng xuất
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                        <i class="fa-solid fa-home me-2"></i> Về trang chính
-                    </a>
-                </li>
+                @* ĐÃ BỎ "Về trang chính" khỏi sidebar *@
             </ul>
         </div>
     </nav>
@@ -85,8 +81,15 @@
             <button id="btn-toggle" class="btn btn-outline-secondary">
                 <i class="fa fa-bars"></i>
             </button>
+
             <div class="d-flex align-items-center gap-3">
                 <span class="small text-muted">Xin chào, @(User?.Identity?.Name ?? "Quản trị")</span>
+
+                <!-- Nút Về trang chính chuyển lên topbar -->
+                <a class="btn btn-soft-secondary btn-pill btn-sm"
+                   asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fa-solid fa-house me-1"></i> Về trang chính
+                </a>
             </div>
         </header>
 
@@ -104,8 +107,12 @@
   const btnClose  = document.getElementById('btn-close');
   const open = () => { sidebar.classList.add('open'); document.body.classList.add('sidebar-open'); }
   const close = () => { sidebar.classList.remove('open'); document.body.classList.remove('sidebar-open'); }
-  btnToggle.addEventListener('click', () => { sidebar.classList.contains('open') ? close() : open(); });
+
+  btnToggle.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) close(); else open();
+  });
   btnClose?.addEventListener('click', close);
+
   document.addEventListener('click', (e) => {
     if (!sidebar.contains(e.target) && !btnToggle.contains(e.target) && window.innerWidth < 992) close();
   });

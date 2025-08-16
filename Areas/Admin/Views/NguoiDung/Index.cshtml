@@ -1,61 +1,206 @@
 @model IEnumerable<WEB.Models.NguoiDung>
-@{ ViewData["Title"] = "Quản lý Người dùng"; }
+@{
+    ViewData["Title"] = "Quản lý Người dùng";
+    var users = (Model ?? Enumerable.Empty<WEB.Models.NguoiDung>())
+                .OrderByDescending(u => u.NgayTao).ToList();
 
-<h2>Quản lý Người dùng</h2>
+    int total  = users.Count;
+    int admins = users.Count(u => string.Equals(u.VaiTro, "Admin", StringComparison.OrdinalIgnoreCase));
+    int readers = users.Count(u => string.Equals(u.VaiTro, "DocGia", StringComparison.OrdinalIgnoreCase));
+    int others  = total - admins - readers;
 
-@if (TempData["Err"] != null)
-{
-  <div class="alert alert-warning">@TempData["Err"]</div>
+    string RoleBadge(string? role)
+    {
+        role = role ?? "Khác";
+        if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
+            return "<span class=\"badge rounded-pill text-bg-danger\">Admin</span>";
+        if (string.Equals(role, "DocGia", StringComparison.OrdinalIgnoreCase))
+            return "<span class=\"badge rounded-pill text-bg-secondary\">DocGia</span>";
+        return $"<span class=\"badge rounded-pill text-bg-info\">{role}</span>";
+    }
 }
 
-<p>
-  <a class="btn btn-primary" asp-action="Create">Thêm người dùng</a>
-  <a class="btn btn-secondary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Về Dashboard</a>
-</p>
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h1 class="h3 m-0">Quản lý Người dùng</h1>
+        <div class="d-flex gap-2">
+            <a class="btn btn-primary" asp-area="Admin" asp-controller="NguoiDung" asp-action="Create">
+                <i class="fa fa-user-plus me-1"></i> Thêm người dùng
+            </a>
+            <a class="btn btn-outline-secondary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+                <i class="fa fa-gauge-high me-1"></i> Về Dashboard
+            </a>
+        </div>
+    </div>
 
-<table class="table table-bordered table-hover align-middle">
-  <thead class="table-light">
-    <tr>
-      <th>ID</th>
-      <th>Họ tên</th>
-      <th>Email</th>
-      <th>Vai trò</th>
-      <th>Ngày tạo</th>
-      <th style="width:260px">Thao tác</th>
-    </tr>
-  </thead>
-  <tbody>
-  @foreach (var u in Model)
-  {
-    <tr>
-      <td>@u.NguoiDungID</td>
-      <td>@u.HoTen</td>
-      <td>@u.Email</td>
-      <td>
-        <span class="badge @(string.Equals(u.VaiTro,"Admin",StringComparison.OrdinalIgnoreCase) ? "bg-danger" : "bg-secondary")">
-          @u.VaiTro
-        </span>
-      </td>
-      <td>@(u.NgayTao.ToString("dd/MM/yyyy HH:mm"))</td>
-      <td class="d-flex gap-1">
-        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@u.NguoiDungID">Sửa</a>
-        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@u.NguoiDungID">Xóa</a>
+    <!-- Toolbar + Stats -->
+    <div class="row g-3 mb-3">
+        <div class="col-12 col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body row g-3 align-items-end">
+                    <div class="col-12 col-md-8">
+                        <label class="form-label mb-1">Tìm kiếm</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                            <input id="searchBox" type="text" class="form-control" placeholder="Nhập họ tên hoặc email để lọc nhanh..." />
+                            <button class="btn btn-soft-secondary" type="button" id="clearSearch">Xoá</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label mb-1">Vai trò</label>
+                        <select id="roleSelect" class="form-select">
+                            <option value="">Tất cả</option>
+                            <option value="Admin">Admin</option>
+                            <option value="DocGia">DocGia</option>
+                            <option value="Khac">Khác</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <form asp-action="SetAdmin" method="post" class="ms-1">
-          @Html.AntiForgeryToken()
-          <input type="hidden" name="id" value="@u.NguoiDungID" />
-          @if (!string.Equals(u.VaiTro,"Admin",StringComparison.OrdinalIgnoreCase))
-          {
-            <button class="btn btn-sm btn-outline-dark">Nâng Admin</button>
-          }
-          else
-          {
-            <input type="hidden" name="makeAdmin" value="false" />
-            <button class="btn btn-sm btn-outline-secondary">Hạ DocGia</button>
-          }
-        </form>
-      </td>
-    </tr>
+        <!-- Mini stats -->
+        <div class="col-6 col-lg-2">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="text-muted small">Tổng người dùng</div>
+                        <div class="fs-3 fw-bold">@total</div>
+                    </div>
+                    <i class="fa fa-users fa-2xl text-primary"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-2">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="text-muted small">Admin</div>
+                        <div class="fs-3 fw-bold">@admins</div>
+                    </div>
+                    <i class="fa fa-user-shield fa-2xl text-danger"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-2">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <div class="text-muted small">DocGia</div>
+                        <div class="fs-3 fw-bold">@readers</div>
+                    </div>
+                    <i class="fa fa-book-reader fa-2xl text-secondary"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:80px">ID</th>
+                        <th style="min-width:220px">Họ tên</th>
+                        <th style="min-width:260px">Email</th>
+                        <th style="width:120px">Vai trò</th>
+                        <th style="width:180px">Ngày tạo</th>
+                        <th style="width:240px" class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    @if (!users.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-5">
+                                Chưa có người dùng nào.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var u in users)
+                        {
+                            var name = u.HoTen ?? "";
+                            var email = u.Email ?? "";
+                            var role = u.VaiTro ?? "Khac";
+                            <tr class="user-row"
+                                data-name="@name.ToLower()"
+                                data-email="@email.ToLower()"
+                                data-role="@role">
+                                <td class="text-muted">#@u.NguoiDungID</td>
+                                <td class="fw-semibold">@name</td>
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(email))
+                                    {
+                                        <a href="mailto:@email">@email</a>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.Raw(RoleBadge(role))
+                                </td>
+                                <td>@(u.NgayTao == default ? "" : u.NgayTao.ToString("dd/MM/yyyy HH:mm"))</td>
+                                <td class="text-center">
+                                    <div class="btn-group post-actions">
+                                        <a class="btn btn-soft-primary btn-pill btn-sm px-3"
+                                           asp-area="Admin" asp-controller="NguoiDung" asp-action="Edit" asp-route-id="@u.NguoiDungID">
+                                            <i class="fa fa-pen me-1"></i> Sửa
+                                        </a>
+                                        <a class="btn btn-soft-danger btn-pill btn-sm px-3"
+                                           asp-area="Admin" asp-controller="NguoiDung" asp-action="Delete" asp-route-id="@u.NguoiDungID">
+                                            <i class="fa fa-trash me-1"></i> Xoá
+                                        </a>
+                                        @if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <a class="btn btn-soft-secondary btn-pill btn-sm px-3"
+                                               asp-area="Admin" asp-controller="NguoiDung" asp-action="HaDocGia" asp-route-id="@u.NguoiDungID">
+                                                <i class="fa fa-user-minus me-1"></i> Hạ DocGia
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-soft-secondary btn-pill btn-sm px-3"
+                                               asp-area="Admin" asp-controller="NguoiDung" asp-action="NangAdmin" asp-route-id="@u.NguoiDungID">
+                                                <i class="fa fa-user-shield me-1"></i> Nâng Admin
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+(() => {
+  const searchBox = document.getElementById('searchBox');
+  const clearBtn  = document.getElementById('clearSearch');
+  const roleSel   = document.getElementById('roleSelect');
+  const rows      = [...document.querySelectorAll('#userTableBody .user-row')];
+
+  function applyFilter() {
+    const q = (searchBox.value || '').toLowerCase().trim();
+    const role = (roleSel.value || '').toLowerCase();
+
+    rows.forEach(tr => {
+      const text = (tr.dataset.name + ' ' + tr.dataset.email);
+      const r = (tr.dataset.role || '').toLowerCase();
+      const matchText = !q || text.indexOf(q) >= 0;
+      const matchRole = !role || r === role || (role === 'khac' && r !== 'admin' && r !== 'docgia');
+      tr.style.display = matchText && matchRole ? '' : 'none';
+    });
   }
-  </tbody>
-</table>
+
+  searchBox?.addEventListener('input', applyFilter);
+  roleSel?.addEventListener('change', applyFilter);
+  clearBtn?.addEventListener('click', () => { searchBox.value = ''; applyFilter(); });
+})();
+</script>
+}
