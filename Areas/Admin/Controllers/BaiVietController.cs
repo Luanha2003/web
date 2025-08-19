@@ -3,8 +3,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using WEB.Models;
-using WEB.Areas.Admin.ViewModels; // dùng cho BaiVietIndexVM
+using WEB.Models;                 
+using WEB.Areas.Admin.ViewModels; 
+using Microsoft.AspNetCore.Http; 
+
 
 namespace WEB.Areas.Admin.Controllers
 {
@@ -23,8 +25,7 @@ namespace WEB.Areas.Admin.Controllers
             );
         }
 
-        // ===== Index: Lọc / Sắp xếp / Lưới-Bảng / Phân trang =====
-        // GET: /Admin/BaiViet
+        // ===== Index =====
         public IActionResult Index(string? q, int? catId, string sort = "new",
                                    string view = "grid", int page = 1, int pageSize = 12)
         {
@@ -61,7 +62,6 @@ namespace WEB.Areas.Admin.Controllers
 
             var posts = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            // map tên chuyên mục (dictionary: int -> string)
             var catMap = _context.ChuyenMucs.AsNoTracking()
                             .ToDictionary(c => c.ChuyenMucID, c => c.TenChuyenMuc);
 
@@ -82,7 +82,7 @@ namespace WEB.Areas.Admin.Controllers
                     HinhAnh       = string.IsNullOrWhiteSpace(b.HinhAnh) ? null : b.HinhAnh,
                     NgayDang      = b.NgayDang,
                     LuotXem       = b.LuotXem,
-                    ChuyenMucID   = b.ChuyenMucID, // int
+                    ChuyenMucID   = b.ChuyenMucID,
                     TenChuyenMuc  = catMap.TryGetValue(b.ChuyenMucID, out var name) ? name : null
                 }).ToList()
             };
@@ -91,7 +91,6 @@ namespace WEB.Areas.Admin.Controllers
         }
 
         // ===== Create =====
-        // GET: /Admin/BaiViet/Create
         public IActionResult Create()
         {
             var gate = OnlyAdmin();
@@ -101,7 +100,6 @@ namespace WEB.Areas.Admin.Controllers
             return View(new BaiViet());
         }
 
-        // POST: /Admin/BaiViet/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(BaiViet model)
@@ -123,17 +121,16 @@ namespace WEB.Areas.Admin.Controllers
             model.NgayDang = DateTime.Now;
             model.LuotXem  = 0;
 
-            // Lấy TacGiaID từ session nếu có
             var userIdStr = HttpContext.Session.GetString("UserId");
             if (int.TryParse(userIdStr, out var uid)) model.TacGiaID = uid;
 
+            // 3 cờ + HomeOrder đã nằm trong model → EF sẽ lưu
             _context.BaiViets.Add(model);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
         // ===== Edit =====
-        // GET: /Admin/BaiViet/Edit/5
         public IActionResult Edit(int id)
         {
             var gate = OnlyAdmin();
@@ -146,7 +143,6 @@ namespace WEB.Areas.Admin.Controllers
             return View(item);
         }
 
-        // POST: /Admin/BaiViet/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, BaiViet model)
@@ -168,18 +164,23 @@ namespace WEB.Areas.Admin.Controllers
                 return View(model);
             }
 
+            // cập nhật dữ liệu chính
             item.TieuDe      = model.TieuDe;
             item.NoiDung     = model.NoiDung;
             item.HinhAnh     = model.HinhAnh;
             item.ChuyenMucID = model.ChuyenMucID;
-            // Giữ nguyên: NgayDang, LuotXem, TacGiaID
+
+            // cập nhật 3 cờ + thứ tự
+            item.HomeCol1 = model.HomeCol1;
+            item.HomeCol2 = model.HomeCol2;
+            item.HomeCol3 = model.HomeCol3;
+            item.HomeOrder = model.HomeOrder;
 
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
         // ===== Delete =====
-        // GET: /Admin/BaiViet/Delete/5
         public IActionResult Delete(int id)
         {
             var gate = OnlyAdmin();
@@ -190,7 +191,6 @@ namespace WEB.Areas.Admin.Controllers
             return View(item);
         }
 
-        // POST: /Admin/BaiViet/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

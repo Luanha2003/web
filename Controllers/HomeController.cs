@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WEB.Models;
 
@@ -30,9 +33,12 @@ namespace WEB.Controllers
             public PostDto? RightSpot { get; set; }
             public List<PostDto> LeftList { get; set; } = new();
             public List<PostDto> LatestGrid { get; set; } = new();
+
+            // 3 cột dưới — sẽ đổ theo cờ HomeCol1/2/3
             public List<PostDto> TinTucHoatDong { get; set; } = new();
             public List<PostDto> QuanLyUngDungCNTT { get; set; } = new();
             public List<PostDto> CoSoDuLieuTNMT { get; set; } = new();
+
             public List<string> TaiLieu { get; set; } = new()
             {
                 "Tài liệu phục vụ hội thảo xây dựng dự thảo Kiến trúc Chuyển đổi số ngành tài nguyên và môi trường",
@@ -42,6 +48,7 @@ namespace WEB.Controllers
             };
         }
 
+        // Map BaiViet -> PostDto
         private static PostDto Map(BaiViet b) =>
             new PostDto(
                 b.BaiVietID,
@@ -57,25 +64,13 @@ namespace WEB.Controllers
         private List<PostDto> TakeLatest(int take) =>
             BaseQuery().Take(take).Select(Map).ToList();
 
-        private List<PostDto> ByCategory(string tenChuyenMuc, int take)
-        {
-            var cm = _ctx.ChuyenMucs.FirstOrDefault(x => x.TenChuyenMuc == tenChuyenMuc);
-            if (cm == null) return TakeLatest(take);
-
-            return _ctx.BaiViets
-                .Where(x => x.ChuyenMucID == cm.ChuyenMucID)
-                .OrderByDescending(x => x.NgayDang)
-                .Take(take)
-                .Select(Map)
-                .ToList();
-        }
-
         // ===== Trang chủ =====
         public IActionResult Index()
         {
             var latest = TakeLatest(8);
             var vm = new HomeVm();
 
+            // Khu FEATURE + RIGHT + LEFT
             if (latest.Any())
             {
                 vm.Featured = latest[0];
@@ -84,9 +79,35 @@ namespace WEB.Controllers
                 vm.LatestGrid = TakeLatest(6);
             }
 
-            vm.TinTucHoatDong    = ByCategory("Tin tức hoạt động", 4);
-            vm.QuanLyUngDungCNTT = ByCategory("Quản lý ứng dụng CNTT", 4);
-            vm.CoSoDuLieuTNMT    = ByCategory("Cơ sở dữ liệu TNMT", 4);
+            // ===== 3 CỘT DƯỚI: đổ theo CỜ ẨN HomeCol1/2/3 =====
+            vm.TinTucHoatDong = _ctx.BaiViets
+                .Where(x => x.HomeCol1)
+                .OrderBy(x => x.HomeOrder ?? int.MaxValue)
+                .ThenByDescending(x => x.NgayDang)
+                .Take(4)
+                .Select(Map)
+                .ToList();
+
+            vm.QuanLyUngDungCNTT = _ctx.BaiViets
+                .Where(x => x.HomeCol2)
+                .OrderBy(x => x.HomeOrder ?? int.MaxValue)
+                .ThenByDescending(x => x.NgayDang)
+                .Take(4)
+                .Select(Map)
+                .ToList();
+
+            vm.CoSoDuLieuTNMT = _ctx.BaiViets
+                .Where(x => x.HomeCol3)
+                .OrderBy(x => x.HomeOrder ?? int.MaxValue)
+                .ThenByDescending(x => x.NgayDang)
+                .Take(4)
+                .Select(Map)
+                .ToList();
+
+            // (Tùy chọn) Fallback nếu admin chưa tick gì → không để UI trống
+            if (vm.TinTucHoatDong.Count == 0) vm.TinTucHoatDong = TakeLatest(4);
+            if (vm.QuanLyUngDungCNTT.Count == 0) vm.QuanLyUngDungCNTT = TakeLatest(4);
+            if (vm.CoSoDuLieuTNMT.Count == 0) vm.CoSoDuLieuTNMT = TakeLatest(4);
 
             ViewData["Title"] = "Trang chủ";
             return View(vm);
